@@ -80,7 +80,7 @@ INSERT INTO cw_movies (title, director, languages, genres, runtimeMin, year, age
 (N'Evan Almighty', 'Evan Hansen', 'Español', 'Comedy', 96, 2007, 10, 2000, 3100, 2000, 1, 'Morgan Freeman, Laura Graham, John Goodman'), 
 (N'Waterworld', 'William Afton', 'Español, Ingles', 'Adventure', 135, 1995, 13, 2000, 2900, 2100, 1, 'Kevin Costner, Tina Majorino'), 
 (N'Pearl Harbor','Winston Erickson', 'Ingles, Japonés', 'Documentary, War', 183, 2001, 18, NULL, 3200, 2500, 1, 'Josh Harnett, Ben Affleck'), 
-(N'Transformers', N'Michael Bay',  'Español, Ingles', 'Action', 144, 2007, 13, 2400, 2900, 2300, 1, 'Megan Fox, Shia LaBeouf')
+(N'Transformers', N'Michael Bay',  'Español, Ingles', 'Action', 144, 2007, 13, 2400, 2900, 2300, 1, 'Megan Fox, Shia LaBeouf');
 
 -- Screen & Hours
 
@@ -93,7 +93,7 @@ INSERT INTO cw_screen_hour(movieID, screenID, hour) VALUES
 (6, 1, '2022-04-09 13:00:00'), (6, 2, '2022-04-09 15:50:00'), (6, 3, '2022-04-09 17:50:00'), 
 (7, 1, '2022-04-09 15:20:00'), (7, 2, '2022-04-09 15:50:00'), (7, 3, '2022-04-09 17:00:00'), 
 (8, 1, '2022-04-09 12:50:00'), (8, 2, '2022-04-09 14:30:00'), (8, 3, '2022-04-09 18:15:00'), 
-(9, 2, '2022-04-09 11:40:00'), (9, 3, '2022-04-09 15:15:00'), (9, 1, '2022-04-09 19:20:00')
+(9, 2, '2022-04-09 11:40:00'), (9, 3, '2022-04-09 15:15:00'), (9, 1, '2022-04-09 19:20:00');
 
 -- Food
 
@@ -102,7 +102,7 @@ INSERT INTO cw_foodtypes VALUES ('Comida'), ('Bebida'), ('Combo')
 INSERT INTO cw_food VALUES ('Refresco Pequeño', 1000, 2, 1200), ('Refresco Mediano', 1000, 2, 1300), ('Refresco Grande', 1500, 2, 1500), ('Agua', 800, 2, 900), 
 ('Palomitas Mantequilla Pequeñas', 700, 1, 1500), ('Palomitas Mantequilla Medianas', 300, 1, 1700), ('Palomitas Mantequilla Grandes', 850, 1, 1900),    
 ('Palomitas Caramelo Pequeñas', 610, 1, 1700), ('Palomitas Caramelo Medianas', 350, 1, 1900), ('Palomitas Caramelo Grandes', 855, 1, 2100),    
-('Combo Amigos', 400, 3, 4800), ('Combo Nachos Queso', 250, 3, 4900), ('Combo Nachos Chili con Carne', 270, 3, 5400), ('Combo Hotdog', 260, 3, 4900), ('Combo Kid', 200, 3, 3500)
+('Combo Amigos', 400, 3, 4800), ('Combo Nachos Queso', 250, 3, 4900), ('Combo Nachos Chili con Carne', 270, 3, 5400), ('Combo Hotdog', 260, 3, 4900), ('Combo Kid', 200, 3, 3500);
 
 -- Users -- Create 2 admins and some clients
 
@@ -111,12 +111,13 @@ INSERT INTO cw_users(email, name, surname1, surname2, ID, vaccines, birthdate, t
 ('supermanthegoat@gmail.com', 'Clark', 'Kent', 'Human', 111111111, 3, '1994-07-05 00:00:00', 1, SUBSTRING(CONVERT(nvarchar(40), NEWID()),0,9)),
 ('normalperson@gmail.com', 'Norman', 'Perrson', 'Smith', 111111112, 2, '2002-06-07 00:00:00', 0, SUBSTRING(CONVERT(nvarchar(40), NEWID()),0,9)), --adult
 ('normalperson2@gmail.com', 'Michael', 'Jackson', 'Bennet', 111111113, 2, '2007-05-15 00:00:00', 0, SUBSTRING(CONVERT(nvarchar(40), NEWID()),0,9)), --15 y.o.
-('jack@gmail.com', 'Jack', 'Skelington', 'Gaze', 111111114, 0, '2000-12-04 00:00:00', 0, SUBSTRING(CONVERT(nvarchar(40), NEWID()),0,9)) --no vaccines
+('jack@gmail.com', 'Jack', 'Skelington', 'Gaze', 111111114, 0, '2000-12-04 00:00:00', 0, SUBSTRING(CONVERT(nvarchar(40), NEWID()),0,9)); --no vaccines
 
 -- Seats for each one -> Stored Procedure
 
 
--- CORRER ESTA POR SI SOLO PRIMERO
+DROP PROCEDURE IF EXISTS SeatsForFunction
+GO
 CREATE PROCEDURE SeatsForFunction @functionID bigint
 AS 
 	DECLARE @Row INT, @Col INT
@@ -136,7 +137,8 @@ AS
 GO
 
 
--- LUEGO ESTA
+DROP PROCEDURE IF EXISTS SeatsForEachFunction
+GO
 CREATE PROCEDURE SeatsForEachFunction
 AS
 	DECLARE cw_cursor CURSOR FOR 
