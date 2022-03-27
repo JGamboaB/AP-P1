@@ -51,6 +51,7 @@ CREATE TABLE cw_screen_hour(
 GO
 
 CREATE TABLE cw_seats(
+	seatID bigint IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	shID bigint NOT NULL FOREIGN KEY REFERENCES cw_screen_hour(shID),
 	number nvarchar(3) NOT NULL,
 	used bit NOT NULL)
@@ -63,6 +64,19 @@ GO
 
 CREATE TABLE cw_food(
 	foodID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	name varchar(100) NOT NULL,
+	stock int NOT NULL,
+	type tinyint NOT NULL FOREIGN KEY REFERENCES cw_foodtypes(foodtypeid), -- 1 food, 2 drink, 3 combo
+	price money NOT NULL)
+GO
+
+CREATE TABLE cw_cart(
+	cartID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	userID bigint NOT NULL FOREIGN KEY REFERENCES cw_users(userID),
+	seatID bigint NOT NULL FOREIGN KEY REFERENCES cw_seats(seatID),
+	
+
+
 	name varchar(100) NOT NULL,
 	stock int NOT NULL,
 	type tinyint NOT NULL FOREIGN KEY REFERENCES cw_foodtypes(foodtypeid), -- 1 food, 2 drink, 3 combo

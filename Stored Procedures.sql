@@ -124,14 +124,48 @@ AS
 DROP PROCEDURE IF EXISTS AddUser
 GO
 CREATE PROCEDURE AddUser
-	
+	@email AS nvarchar(100),
+	@password AS nvarchar(100),
+	@name AS nvarchar(100),
+	@surname1 AS nvarchar(100),
+	@surname2 AS nvarchar(100),
+	@ID AS int,
+	@vaccines AS tinyint,
+	@birthdate AS datetime,
+	@type AS bit
 AS
-	INSERT INTO cw_food (name, stock, type, price) 
-	VALUES (@name, @stock, @type, @price)
+	INSERT INTO cw_users (email, password, name, surname1, surname2, ID, vaccines, birthdate, type) 
+	VALUES (@email, @password, @name, @surname1, @surname2, @ID, @vaccines, @birthdate, @type)
 
 -- Modificar Clientes
 
+DROP PROCEDURE IF EXISTS modifyUser
+GO
+CREATE PROCEDURE modifyUser
+	@Userid AS int,
+
+	@email AS nvarchar(100),
+	@password AS nvarchar(100),
+	@name AS nvarchar(100),
+	@surname1 AS nvarchar(100),
+	@surname2 AS nvarchar(100),
+	@ID AS int,
+	@vaccines AS tinyint,
+	@birthdate AS datetime,
+	@type AS bit
+AS
+	UPDATE cw_users
+	SET email = @email, password = @password, name = @name, surname1 = @surname1, surname2 = @surname2, ID = @ID, vaccines = @vaccines, birthdate = @birthdate, type = @type
+	WHERE userID = @Userid;
+
 -- Eliminar Clientes
+
+DROP PROCEDURE IF EXISTS deleteUser
+GO
+CREATE PROCEDURE deleteUser
+	@id AS int
+AS
+	DELETE FROM cw_users WHERE userID = @id;
 
 -- / / Cartelera
 
