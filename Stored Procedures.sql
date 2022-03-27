@@ -75,7 +75,17 @@ GO
 CREATE PROCEDURE deleteMovie
 	@id AS int
 AS
-	DELETE FROM cw_movies WHERE movieID = @id;
+	DELETE s FROM cw_seats s
+	INNER JOIN cw_screen_hour sh ON sh.shID = s.shID
+	INNER JOIN cw_movies mov ON mov.movieID = sh.movieID
+	WHERE mov.movieID = @id
+
+	DELETE sh FROM cw_screen_hour sh
+	INNER JOIN cw_movies mov ON mov.movieID = sh.movieID
+	WHERE mov.movieID = @id
+
+	DELETE FROM cw_movies
+	WHERE movieID = @id
 
 -- / / Alimentos
 
@@ -171,7 +181,28 @@ AS
 
 -- Incluir o no en cartelera
 
+DROP PROCEDURE IF EXISTS modifyDisplay
+GO
+CREATE PROCEDURE modifyDisplay
+	@id AS int,
+
+	@display AS bit
+AS
+	UPDATE cw_movies
+	SET display = @display
+	WHERE movieID = @id;
+
 -- Asignar sala a pelicula
+
+DROP PROCEDURE IF EXISTS AddScreen
+GO
+CREATE PROCEDURE AddScreen
+	@movieID AS int,
+	@screenid AS tinyint,
+	@hour AS datetime
+AS
+	INSERT INTO cw_screen_hour(movieID, screenid, hour) 
+	VALUES (@movieID, @screenid, @hour)
 
 -- / / / / / Cliente
 
@@ -179,11 +210,36 @@ AS
 
 -- Visualizar cartelera
 
+DROP PROCEDURE IF EXISTS VisCartelera
+GO
+CREATE PROCEDURE VisCartelera
+AS
+	SELECT title FROM cw_movies WHERE display = 1;
+
 -- Visualizar pelicula
 
+DROP PROCEDURE IF EXISTS VisMovie
+GO
+CREATE PROCEDURE VisMovie
+	@id AS int
+AS
+	SELECT * FROM cw_screen_hour sh
+	INNER JOIN cw_movies mov ON mov.movieID = sh.movieID
+	WHERE mov.movieID = @id
 
+-- Visualizar asientos
+
+DROP PROCEDURE IF EXISTS VisSeats
+GO
+CREATE PROCEDURE VisSeats
+	@id AS int
+AS
+	SELECT * FROM cw_seats
+	WHERE shID = @id
 
 -- Añadir al carrito
+
+
 
 -- Selección de asientos
 
